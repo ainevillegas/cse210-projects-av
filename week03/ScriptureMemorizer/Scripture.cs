@@ -6,11 +6,12 @@ public class Scripture
 {
     private Reference _reference;
     private List<Word> _words;
-    private Random _random = new Random();
+    private Random _random;
 
     public Scripture(Reference reference, string text)
     {
         _reference = reference;
+        _random = new Random();
 
         _words = text
             .Split(' ')
@@ -18,37 +19,41 @@ public class Scripture
             .ToList();
     }
 
-    public void HideRandomWords(int numberToHide)
+    public void HideRandomWords(int count)
     {
-        List<Word> visibleWords = _words
-            .Where(word => !word.IsHidden())
-            .ToList();
+        List<Word> visibleWords =
+            _words.Where(word => !word.IsHidden()).ToList();
 
-        if (visibleWords.Count == 0)
-        {
-            return;
-        }
-
-        for (int i = 0; i < numberToHide && visibleWords.Count > 0; i++)
+        for (int i = 0; i < count && visibleWords.Count > 0; i++)
         {
             int index = _random.Next(visibleWords.Count);
 
             visibleWords[index].Hide();
-
             visibleWords.RemoveAt(index);
         }
-    }
-
-    public string GetDisplayText()
-    {
-        string text = string.Join(" ",
-            _words.Select(word => word.GetDisplayText()));
-
-        return $"{_reference.GetDisplayText()} {text}";
     }
 
     public bool IsCompletelyHidden()
     {
         return _words.All(word => word.IsHidden());
+    }
+
+    public string GetDisplayText()
+    {
+        string text =
+            string.Join(" ",
+                _words.Select(word => word.GetDisplayText()));
+
+        return $"{_reference.GetDisplayText()} {text}";
+    }
+
+    public int GetHiddenWordCount()
+    {
+        return _words.Count(word => word.IsHidden());
+    }
+
+    public int GetTotalWordCount()
+    {
+        return _words.Count;
     }
 }

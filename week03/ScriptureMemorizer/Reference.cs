@@ -5,16 +5,14 @@ public class Reference
     private int _verse;
     private int _endVerse;
 
-    // Single verse
     public Reference(string book, int chapter, int verse)
     {
         _book = book;
         _chapter = chapter;
         _verse = verse;
-        _endVerse = 0;
+        _endVerse = verse;
     }
 
-    // Verse range
     public Reference(string book, int chapter, int verse, int endVerse)
     {
         _book = book;
@@ -25,9 +23,11 @@ public class Reference
 
     public string GetDisplayText()
     {
-        if (_endVerse == 0)
+        if (_verse == _endVerse)
         {
             return $"{_book} {_chapter}:{_verse}";
         }
 
-        return $"{_book} {_chapter}:{_verse}-{_
+        return $"{_book} {_chapter}:{_verse}-{_endVerse}";
+    }
+}
