@@ -4,7 +4,21 @@ class Program
 {
     static void Main(string[] args)
     {
+        /*
+         * EXCEEDING REQUIREMENTS:
+         *
+         * 1. The program keeps track of the number of mindfulness
+         *    activities completed during the current session.
+         *
+         * 2. The program validates the duration so the user cannot
+         *    enter zero, a negative number, or non-numeric text.
+         *
+         * 3. The Reflecting Activity avoids repeating a question
+         *    until all available questions have been used.
+         */
+
         string choice = "";
+        int completedActivities = 0;
 
         while (choice != "4")
         {
@@ -21,26 +35,45 @@ class Program
 
             if (choice == "1")
             {
-                BreathingActivity breathing = new BreathingActivity();
-                breathing.Run();
+                BreathingActivity breathingActivity =
+                    new BreathingActivity();
+
+                breathingActivity.Run();
+                completedActivities++;
             }
             else if (choice == "2")
             {
-                ReflectingActivity reflecting = new ReflectingActivity();
-                reflecting.Run();
+                ReflectingActivity reflectingActivity =
+                    new ReflectingActivity();
+
+                reflectingActivity.Run();
+                completedActivities++;
             }
             else if (choice == "3")
             {
-                ListingActivity listing = new ListingActivity();
-                listing.Run();
+                ListingActivity listingActivity =
+                    new ListingActivity();
+
+                listingActivity.Run();
+                completedActivities++;
             }
             else if (choice == "4")
             {
-                Console.WriteLine("Thank you for using the program.");
+                Console.Clear();
+
+                Console.WriteLine(
+                    $"You completed {completedActivities} mindfulness " +
+                    "activities during this session.");
+
+                Console.WriteLine();
+                Console.WriteLine(
+                    "Thank you for using the Mindfulness Program.");
             }
             else
             {
-                Console.WriteLine("Please enter a valid choice.");
+                Console.WriteLine();
+                Console.WriteLine(
+                    "Invalid choice. Please select a number from 1 to 4.");
             }
 
             if (choice != "4")
